@@ -15,8 +15,8 @@
     </div>
     <div class="headerdiv" id="headerdiv1">
       {% if g.user %}
-      <object>{{ g.user['username'] }}</object>
-      <a href="{{ url_for('auth.logout') }}">Log Out</a>
+      <p>{{ g.user['username'] }}</p>
+      <h2 id="show_detail">&#8801;</h2>
       {% else %}
       <a href="/auth/register">Register</a>
       <a href="/auth/login">Log In</a>
@@ -24,7 +24,15 @@
     </div>
   </header>
   {% if g.user %}
-  <div class="new"> <a class="action" href="{{ url_for('blog.create') }}">New<br>Post</a></div>
+  <div id="detail">
+    <div><img src="{{url_for('static',filename=g.user['username']+'.jpg' )}}" alt="profile_pic" id="profile_pic"></div>
+    <div id="details">
+      <p id="user_name" class="detail1">{{ g.user['first_name'] +" "+ g.user['last_name'] }}</p>
+      <a href="/user/profile" class="detail1">Your Profile</a>
+      <a href="/create" class="detail1">New Post</a>
+      <a href="/auth/logout" class="detail1">Log Out</a>
+    </div>
+  </div>
   {% endif %}
   <div id="connectLink">
     <a href="https://www.instagram.com/gajraj_chakrawarti_12/"><img src="{{url_for('static',filename='instagram.png')}}"
@@ -58,4 +66,5 @@
     </div>
   </footer>
 </body>
+<script src="{{url_for('static',filename='script.js')}}"></script>
 </html>

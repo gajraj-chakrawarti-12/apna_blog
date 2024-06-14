@@ -5,7 +5,33 @@
 {% endblock %}
 
 {% block content %}
+{% if g.user %}
 {% for post in posts %}
+{% if g.user['id'] == post['author_id'] %}
+<article class="post">
+  <header>
+    <div>
+      <h1>{{ post['title'] }}</h1>
+    </div>
+    <br>
+  </header>
+  <p class="body">>>> {{ post['body'] }}</p>
+  <br>
+  <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d %H:%M:%S') }}</div>
+  <br>
+
+  <div id="someoperation">
+    <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
+  </div>
+  {% endif %}
+</article>
+{% if not loop.last %}
+<hr>
+{% endif %}
+{% endfor %}
+{% else %}
+{% for post in posts %}
+
 <article class="post">
   <header>
     <div>
@@ -17,15 +43,13 @@
   <p class="body">>>> {{ post['body'] }}</p>
   <br>
   <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d %H:%M:%S') }}</div>
-  <br>
-  {% if g.user['id'] == post['author_id'] %}
-  <div id="someoperation">
-    <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
-  </div>
-  {% endif %}
 </article>
 {% if not loop.last %}
 <hr>
+
 {% endif %}
+
+
 {% endfor %}
+{% endif %}
 {% endblock %}
